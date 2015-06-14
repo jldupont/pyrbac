@@ -37,6 +37,8 @@ class Role(object):
 
     __metaclass__ = MetaRole
     
+    has_all_permissions = False
+    
 #
 # ========================================================================= The basic roles
 #
@@ -45,6 +47,9 @@ class Admin(Role):
     '''
     The most privileged role
     '''
+
+    has_all_permissions = True
+    
 
 class Guest(Role):
     '''

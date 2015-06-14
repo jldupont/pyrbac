@@ -4,6 +4,11 @@ Created on Jun 14, 2015
 @author: jldupont
 '''
 
+class PermissionError(Exception):
+    '''
+    The exception class for Permission access control
+    '''
+
 
 class Permission(object):
     '''
