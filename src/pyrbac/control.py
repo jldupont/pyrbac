@@ -13,6 +13,13 @@ def ensure(user, permission):
     '''
     Ensures that 'user' has 'permission'
     
+    Go through all the 'roles' assigned to a user type and
+     confirm that there is at least 1 of these roles that
+     list the required 'permission'. Else, raise 'PermissionError'.
+
+    @param user: subclass of BaseUserRBAC
+    @param permission: subclass of Permission  
+    
     @return: None
     @raise PermissionError 
     '''
@@ -22,3 +29,19 @@ def ensure(user, permission):
     if user.has_all_permissions:
         return
     
+
+def has_permission(role, permission):
+    '''
+    Verifies that 'role' has 'permission'
+    
+    @param role: subclass of Role
+    @param permission: subclass of Permission  
+    
+    @return True | False
+    '''
+    
+    for _permission in role.permissions:
+        if _permission == permission:
+            return True
+
+    return False

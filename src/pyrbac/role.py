@@ -37,6 +37,7 @@ class Role(object):
 
     __metaclass__ = MetaRole
     
+    permissions = []
     has_all_permissions = False
     
 #
