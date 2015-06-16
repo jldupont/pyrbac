@@ -21,14 +21,6 @@ class Test1(unittest.TestCase):
     Very basic tests
     '''
 
-    def setUp(self):
-        pass
-
-
-    def tearDown(self):
-        pass
-
-
     def testRoleAdmin1(self):
         '''
         Existence
@@ -43,13 +35,17 @@ class Test1(unittest.TestCase):
 
 
     def testPermissionCreation1(self):
-        
+        '''
+        Invalid creation 1
+        '''
         with self.assertRaises(TypeError):
             Permission(None, None)
 
 
     def testPermissionCreation2(self):
-        
+        '''
+        Invalid creation 2
+        '''        
         with self.assertRaises(AssertionError):
             Permission(DummyClass, DummyClass)
 

@@ -27,15 +27,8 @@ class User1(BaseUserRBAC):
 
 class Test3(unittest.TestCase):
     '''
-    Hypothetical role 'Manager' tests
+    User class related tests
     '''
-
-    def setUp(self):
-        pass
-
-
-    def tearDown(self):
-        pass
 
     def testUser1(self):
         

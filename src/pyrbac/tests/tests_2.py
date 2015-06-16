@@ -90,27 +90,26 @@ class User3(BaseUserRBAC):
 
 class Test2(unittest.TestCase):
     '''
-    Hypothetical role 'Manager' tests
+    Hypothetical roles tests
     '''
 
-    def setUp(self):
-        pass
-
-
-    def tearDown(self):
-        pass
-
-
     def testNameProperty(self):
+        '''
+        Resource Property
+        '''
         assert Domain.name == "Domain"
         
     
     def testPermission1(self):
-        
+        '''
+        Permission OK 1 - with user class
+        '''
         ensure(User1, Permission(Domain, Create))  
 
     def testPermission2a(self):
-        
+        '''
+        Permission OK 2 - with user class instance
+        '''        
         user1 = User1()
         ensure(user1, Permission(Domain, Create))
         ensure(user1, Permission(Domain, Read))
@@ -118,7 +117,9 @@ class Test2(unittest.TestCase):
 
 
     def testPermission2b(self):
-        
+        '''
+        Another user class
+        '''
         user2 = User2()
         ensure(user2, Permission(Domain, Create))
         ensure(user2, Permission(Domain, Read))
@@ -126,7 +127,9 @@ class Test2(unittest.TestCase):
         ensure(user2, Permission(Domain, Delete))  
 
     def testPermission2c(self):
-        
+        '''
+        Multiple roles per user class
+        '''        
         user3 = User3()
         ensure(user3, Permission(Domain, Create))
         ensure(user3, Permission(Domain, Read))
@@ -137,7 +140,9 @@ class Test2(unittest.TestCase):
         ensure(user3, Permission(TestResource, Update))
 
     def testPermission3(self):
-        
+        '''
+        Missing permission
+        '''        
         user1 = User1()
         
         with self.assertRaises(PermissionError):
