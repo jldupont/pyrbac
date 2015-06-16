@@ -3,6 +3,7 @@ Created on Jun 14, 2015
 
 @author: jldupont
 '''
+from _pyio import __metaclass__
 
 class MetaResource(type):
     '''
@@ -17,7 +18,8 @@ class MetaResource(type):
         newclass=super(MetaResource, cls).__new__(cls, future_class_name, future_class_parents, future_class_attr)
         
         if newclass.__name__ != 'Resource':
-            cls.roles.append(newclass)
+            cls.resources.append(newclass)
+            newclass.name = newclass.__name__
     
         return newclass
 
@@ -36,4 +38,6 @@ class Resource(object):
     '''
     Base class for a Resource
     '''
+    
+    __metaclass__ = MetaResource
     

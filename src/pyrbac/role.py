@@ -4,11 +4,14 @@ Created on Jun 14, 2015
 @author: jldupont
 '''
 
+from .permission import Permission
+
+
 class MetaRole(type):
     '''
     Metaclass for Role
     
-    Collects all subsclasses of Role
+    Collects all subclasses of Role
     '''
     
     roles = []
@@ -18,6 +21,9 @@ class MetaRole(type):
         
         if newclass.__name__ != 'Role':
             cls.roles.append(newclass)
+            newclass.name = newclass.__name__
+            
+            newclass._validate()
     
         return newclass
     
@@ -40,6 +46,13 @@ class Role(object):
     permissions = []
     has_all_permissions = False
     
+    @classmethod
+    def _validate(cls):
+        '''
+        Validate the permissions list
+        '''
+        for permission in cls.permissions:
+            assert isinstance(permission, Permission), "got: %s" % repr(permission)
 #
 # ========================================================================= The basic roles
 #

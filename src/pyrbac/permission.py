@@ -4,6 +4,9 @@ Created on Jun 14, 2015
 @author: jldupont
 '''
 
+from .resource import Resource
+from .action import Action
+
 class PermissionError(Exception):
     '''
     The exception class for Permission access control
@@ -15,35 +18,31 @@ class Permission(object):
     Base class for permissions
     '''
 
+    def __init__(self, resource, action):
 
-class Read(Permission):
-    '''
-    'Read' Permission on a resource
-    '''
+        self.for_resource = resource
+        self.for_action   = action
+    
+    def __repr__(self, *args, **kwargs):
+        return "Permission:%s:%s" % (self.for_resource.name, self.for_action.name)
 
-class Update(Permission):
-    '''
-    'Update' Permission on a resource
-    '''
-   
-class Create(Permission):
-    '''
-    'Create' Permission for a resource
-    '''
-    
-class Delete(Permission):
-    '''
-    'Delete' Permission on a resource
-    '''
-    
-class List(Permission):
-    '''
-    'List' Permission for a collection of resource
-    '''
-    
-class Search(Permission):
-    '''
-    'Search' Permission on a collection of resource
-    '''
+    def __eq__(self, other):
+        return self.for_resource == other.for_resource and self.for_action == other.for_action
+
 
     
+def define_permissions(tuples_resource_action):
+    '''
+    Helper function for defining Permissions
+    
+    @return [Permission] 
+    '''
+    permissions = []
+    
+    for resource, action in tuples_resource_action:
+        assert issubclass(resource, Resource), "expecting Resource in tuple (Resource, Action)"
+        assert issubclass(action,   Action),   "expecting Action in tuple (Resource, Action)"
+        
+        permissions.append(Permission(resource, action))
+        
+    return permissions

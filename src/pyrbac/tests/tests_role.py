@@ -5,11 +5,17 @@ Created on Jun 14, 2015
 '''
 import unittest
 
+from pyrbac.permission import * #@UnusedWildImport
 import pyrbac.role as mrole
 
+#
+# ==================================================================================
+#
 
-class Test(unittest.TestCase):
-
+class Test1(unittest.TestCase):
+    '''
+    Very basic tests
+    '''
 
     def setUp(self):
         pass
@@ -19,17 +25,18 @@ class Test(unittest.TestCase):
         pass
 
 
-    def testRoleAccumulation(self):
-        '''
-        There should only be 2 roles defined in the library
-        '''
-        assert len(mrole.get_roles()) == 2
-
     def testRoleAdmin1(self):
         '''
         Existence
         '''
         assert mrole.Admin in mrole.get_roles()
+
+    def testRoleAdmin2(self):
+        '''
+        Name property
+        '''
+        assert (mrole.Admin).name == 'Admin'
+
 
 
 

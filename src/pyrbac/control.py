@@ -23,11 +23,17 @@ def ensure(user, permission):
     @return: None
     @raise PermissionError 
     '''
-    assert issubclass(user, BaseUserRBAC),     "The parameter 'user' must be of subclass 'BaseUserRBAC'"
-    assert issubclass(permission, Permission), "The parameter 'permission' must be of subclass 'Permission'"
+    assert isinstance(user, BaseUserRBAC) or issubclass(user, BaseUserRBAC),     "The parameter 'user' must be an instance of 'BaseUserRBAC'"
+    assert isinstance(permission, Permission), "The parameter 'permission' must be an instance of 'Permission'"
     
-    if user.has_all_permissions:
-        return
+    for role in user.roles:
+        if role.has_all_permissions:
+            return
+        
+        if has_permission(role, permission):
+            return
+        
+    raise PermissionError('Expecting permission %s' % permission)
     
 
 def has_permission(role, permission):
