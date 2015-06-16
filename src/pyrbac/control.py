@@ -6,7 +6,7 @@ Created on Jun 14, 2015
 @author: jldupont
 '''
 
-from .user import BaseUserRBAC
+from .user import UserRBAC
 from .permission import Permission, PermissionError
 
 def ensure(user, permission):
@@ -23,7 +23,7 @@ def ensure(user, permission):
     @return: None
     @raise PermissionError 
     '''
-    assert isinstance(user, BaseUserRBAC) or issubclass(user, BaseUserRBAC),     "The parameter 'user' must be an instance of 'BaseUserRBAC'"
+    assert isinstance(user, UserRBAC) or issubclass(user, UserRBAC),     "The parameter 'user' must be an instance of 'BaseUserRBAC'"
     assert isinstance(permission, Permission), "The parameter 'permission' must be an instance of 'Permission'"
     
     for role in user.roles:
@@ -33,7 +33,7 @@ def ensure(user, permission):
         if has_permission(role, permission):
             return
         
-    raise PermissionError('Expecting permission %s' % permission)
+    raise PermissionError('Expecting %s' % permission)
     
 
 def has_permission(role, permission):

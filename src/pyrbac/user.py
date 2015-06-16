@@ -4,61 +4,54 @@ Created on Jun 14, 2015
 @author: jldupont
 '''
 
-from role import Admin
-from _pyio import __metaclass__
+from role import get_role_from_name, get_role_from_name_or_class, roles_class_to_name_list
 
 
-class UserUnknownError(Exception):
-    '''
-    An unknown user class
-    '''
-
-
-class MetaUser(type):
-    '''
-    Metaclass for User
-    '''
-    
-    users = {}
-    
-    def __new__(cls, future_class_name, future_class_parents, future_class_attr):
-        newclass=super(MetaUser, cls).__new__(cls, future_class_name, future_class_parents, future_class_attr)
-        
-        if newclass.__name__ != 'BaseUserRBAC':
-            
-            name = newclass.name = newclass.__name__            
-            cls.users[name.lower()] = newclass 
-    
-        return newclass
-
-
-class BaseUserRBAC(object):
+class UserRBAC(object):
     '''
     The base definition of a User
     '''
-    
-    __metaclass__ = MetaUser
-    
-    roles = []
-    
 
-class UserAdmin(BaseUserRBAC):
-    '''
-    The Admin user
-    '''
-    roles = [Admin]
-    
-    
-def get_user_class_from_name(name):
-    '''
-    Return a BaseUserRBAC subclass corresponding to 'name' string
-    
-    @raise UserUnknownError    
-    '''
-    assert isinstance(name, basestring), "Expecting a string for 'name'" 
-    
-    try:
-        return MetaUser.users[name.lower()]
-    except:
-        raise UserUnknownError()
+    def __init__(self, roles_name_or_classes = []):
+        
+        self.init_roles_from_names_or_classes(roles_name_or_classes)
+        
+        
+    def init_roles_from_names_or_classes(self, names_or_classes):
+        '''
+        Initialize the user roles from a list of role names
+         or a list of classes
+        
+        @raise RoleUnknownError
+        '''
+        self.roles = []        
+        for name_or_class in names_or_classes:
+            
+            role_class = get_role_from_name_or_class(name_or_class)
+            self.roles.append( role_class )
+            
+    def serialize_roles(self):
+        '''
+        Return a structure representing the roles 
+         of the user. This structure can be persisted easily through
+         a representation such as JSON.
+         
+        @return [string]
+        '''
+        return roles_class_to_name_list(self.roles)
+             
+
+    def init_roles_from_names(self, roles_name = []):
+        '''
+        Initialize the user roles from a list of role names
+        
+        @raise RoleUnknownError
+        '''
+        assert isinstance(roles_name, list)
+        
+        self.roles = []
+         
+        for role_name in roles_name:
+            role_class = get_role_from_name(role_name)
+            self.roles.append(role_class)
     

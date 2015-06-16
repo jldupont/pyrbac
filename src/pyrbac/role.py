@@ -7,6 +7,9 @@ Created on Jun 14, 2015
 from .permission import Permission
 
 
+class RoleUnknownError(Exception): pass
+
+
 class MetaRole(type):
     '''
     Metaclass for Role
@@ -14,15 +17,16 @@ class MetaRole(type):
     Collects all subclasses of Role
     '''
     
-    roles = []
+    roles = {}
     
     def __new__(cls, future_class_name, future_class_parents, future_class_attr):
         newclass=super(MetaRole, cls).__new__(cls, future_class_name, future_class_parents, future_class_attr)
         
         if newclass.__name__ != 'Role':
-            cls.roles.append(newclass)
-            newclass.name = newclass.__name__
             
+            name = newclass.__name__
+            newclass.name = name
+            cls.roles[name.lower()] = newclass
             newclass._validate()
     
         return newclass
@@ -32,9 +36,53 @@ def get_roles():
     '''
     Return all Role subclasses
     '''
-    return MetaRole.roles
+    return MetaRole.roles.values()
 
 
+def get_role_from_name(name):
+    '''
+    Return a Role class given the name of a role
+    
+    @raise RoleUnknownError 
+    '''
+    try:
+        return MetaRole.roles[name.lower()]
+    except:
+        RoleUnknownError(str(name))
+
+
+def get_role_from_name_or_class(name_or_class):
+    '''
+    Return a Role class based on either a role name
+     or pass-through the Role class
+     
+    @return Role class
+    @raise RoleUnknownError
+    '''
+    if isinstance(name_or_class, basestring):
+        role_class = get_role_from_name(name_or_class)
+        return role_class
+    
+    elif issubclass(name_or_class, Role):
+        return name_or_class
+    
+    raise RoleUnknownError(str())
+    
+def roles_class_to_name_list(roles_class):
+    '''
+    Return a list of role names given a list of role classes
+    
+    @return [string]
+    @raise RoleUnknownError 
+    '''
+    assert isinstance(roles_class, list), 'Expecting list of Role class'
+    
+    roles_name = []
+    for role_class in roles_class:
+        assert issubclass(role_class, Role), 'expecting Role subsclass'
+        roles_name.append( role_class.name )
+        
+    return roles_name
 
 class Role(object):
     '''

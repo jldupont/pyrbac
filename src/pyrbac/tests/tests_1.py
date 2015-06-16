@@ -25,13 +25,13 @@ class Test1(unittest.TestCase):
         '''
         Existence
         '''
-        assert mrole.Admin in mrole.get_roles()
-
+        self.assertTrue(mrole.Admin in mrole.get_roles(), 'Expecting Admin role')
+        
     def testRoleAdmin2(self):
         '''
         Name property
         '''
-        assert (mrole.Admin).name == 'Admin'
+        self.assertEqual((mrole.Admin).name, 'Admin', 'Expecting Admin class to have string name Admin')
 
 
     def testPermissionCreation1(self):
