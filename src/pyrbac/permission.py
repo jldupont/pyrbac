@@ -20,11 +20,14 @@ class Permission(object):
 
     def __init__(self, resource, action):
 
+        assert issubclass(resource, Resource), "Expecting subclass of Resource"
+        assert issubclass(action,   Action),   "Expecting subclass of Action"
+
         self.for_resource = resource
         self.for_action   = action
     
     def __repr__(self, *args, **kwargs):
-        return "Permission:%s:%s" % (self.for_resource.name, self.for_action.name)
+        return "%s:%s" % (self.for_resource.name, self.for_action.name)
 
     def __eq__(self, other):
         return self.for_resource == other.for_resource and self.for_action == other.for_action

@@ -12,6 +12,10 @@ import pyrbac.role as mrole
 # ==================================================================================
 #
 
+class DummyClass(object): pass
+
+
+
 class Test1(unittest.TestCase):
     '''
     Very basic tests
@@ -38,7 +42,16 @@ class Test1(unittest.TestCase):
         assert (mrole.Admin).name == 'Admin'
 
 
+    def testPermissionCreation1(self):
+        
+        with self.assertRaises(TypeError):
+            Permission(None, None)
 
+
+    def testPermissionCreation2(self):
+        
+        with self.assertRaises(AssertionError):
+            Permission(DummyClass, DummyClass)
 
 
 
