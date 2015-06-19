@@ -1,5 +1,5 @@
 ### Status
-[![Build Status](https://travis-ci.org/jldupont/pyrbac.svg?branch=master)]
+[Build Status](https://travis-ci.org/jldupont/pyrbac.svg?branch=master)
 
 pyrbac
 ======
