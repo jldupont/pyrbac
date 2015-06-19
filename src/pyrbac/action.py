@@ -3,7 +3,6 @@ Created on Jun 15, 2015
 
 @author: jldupont
 '''
-from _pyio import __metaclass__
 
 class MetaAction(type):
     
