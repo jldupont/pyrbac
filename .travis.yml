@@ -1,10 +1,6 @@
 language: python
 python:
   - "2.7"
-  - "2.6"
- 
-install:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then pip install importlib unittest2; fi
 
 script: nosetests
  
