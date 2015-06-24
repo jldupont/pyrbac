@@ -31,7 +31,7 @@ setup(name=         'pyrbac',
       ,long_description=DESC
       ,install_requires=[
                          ]
-      ,test_suite="pyrbac.tests"
+      ,test_suite="tests"
       ,use_2to3 = True
       )
 
