@@ -68,6 +68,22 @@ def get_role_from_name_or_class(name_or_class):
     
     raise RoleUnknownError(str())
     
+def roles_class_from_name_list(names_list):
+    '''
+    Construct [Role] from [string]
+    
+    @return [Role]
+    @raise RoleUnknownError
+    '''
+    assert isinstance(names_list, list), 'Expecting [string], got %s' % repr(names_list)
+    
+    roles = []
+    
+    for name in names_list:
+        roles.append( get_role_from_name(name) )
+    
+    return roles
+    
 def roles_class_to_name_list(roles_class):
     '''
     Return a list of role names given a list of role classes

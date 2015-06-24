@@ -48,6 +48,24 @@ class Test1(unittest.TestCase):
         '''        
         with self.assertRaises(AssertionError):
             Permission(DummyClass, DummyClass)
+            
+    def testRoleSerialization(self):
+        
+        roles_list = [mrole.Admin, mrole.Guest]
+        
+        names_list = mrole.roles_class_to_name_list(roles_list)
+        
+        self.assertTrue('Admin' in names_list, 'Expected Admin in list, got %s' % repr(names_list))
+        self.assertTrue('Guest' in names_list, 'Expected Guest in list, got %s' % repr(names_list))
+        
+            
+    def testRoleDeserialization(self):
+        
+        names_list = ['Admin', 'Guest']
+        
+        roles_list = mrole.roles_class_from_name_list(names_list)
+        self.assertTrue(mrole.Admin in roles_list, 'Expected role Admin in result list')
+        self.assertTrue(mrole.Guest in roles_list, 'Expected role Guest in result list')
 
 
 
