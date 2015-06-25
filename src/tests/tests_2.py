@@ -5,12 +5,14 @@ Created on Jun 15, 2015
 '''
 import unittest
 
-from pyrbac.user import UserRBAC
-from pyrbac.action import * #@UnusedWildImport
-import pyrbac.role as mrole
-from pyrbac.resource import Resource
-from pyrbac.permission import define_permissions, Permission, PermissionError
-from pyrbac.control import ensure
+from pyrbac import * #@UnusedWildImport
+
+#from pyrbac.user import UserRBAC
+#from pyrbac.action import * #@UnusedWildImport
+#import pyrbac.role as mrole
+#from pyrbac.resource import Resource
+#from pyrbac.permission import define_permissions, Permission, PermissionError
+#from pyrbac.control import ensure
 
 
 #
@@ -29,7 +31,7 @@ class TestResource(Resource):
 
 
 
-class Manager(mrole.Role):
+class Manager(Role):
     '''
     A test role
     '''
@@ -39,7 +41,7 @@ class Manager(mrole.Role):
                                        ,(Domain, Update)
                                       ])
 
-class Tester(mrole.Role):
+class Tester(Role):
     '''
     A test role
     '''
@@ -50,7 +52,7 @@ class Tester(mrole.Role):
                                       ])
 
 
-class Director(mrole.Role):
+class Director(Role):
     '''
     A test role
     '''
@@ -75,13 +77,6 @@ class Test2(unittest.TestCase):
     '''
 
 
-    def testNameProperty(self):
-        '''
-        Resource Property
-        '''
-        assert Domain.name == "Domain"
-        
-    
     def testPermission1a(self):
         '''
         Permission OK 2 - with user class instance

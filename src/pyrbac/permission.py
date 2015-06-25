@@ -27,7 +27,7 @@ class Permission(object):
         self.for_action   = action
     
     def __repr__(self, *args, **kwargs):
-        return "%s:%s" % (self.for_resource.name, self.for_action.name)
+        return "%s:%s" % (self.for_resource.__name__, self.for_action.__name__)
 
     def __eq__(self, other):
         return self.for_resource == other.for_resource and self.for_action == other.for_action
