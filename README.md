@@ -38,4 +38,26 @@ user1 = UserRBAC([Manager])
 # Check for permission - throws an exception upon restriction
 #                
 ensure(user1, Permission(Domain, Create))
+
+#
+# Another role with more permissions
+#
+class Director(Role):
+    '''
+    A test role
+    '''
+    permissions = define_permissions([
+                                        (Domain, Create)
+                                       ,(Domain, Read)
+                                       ,(Domain, Update)
+                                       ,(Domain, Delete)
+                                      ])
+user2 = UserRBAC([Director])
+
+#  A Director can assign the role of 'Manager'
+#   because Director has strictly more rights than a 'Manager'
+can_assign(user2, Manager) == True
+
+#  But a Manager can't even assign a role of Manager
+can_assign(user1, Manager) == False
 ```
