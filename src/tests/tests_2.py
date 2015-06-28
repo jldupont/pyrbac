@@ -7,12 +7,6 @@ import unittest
 
 from pyrbac import * #@UnusedWildImport
 
-#from pyrbac.user import UserRBAC
-#from pyrbac.action import * #@UnusedWildImport
-#import pyrbac.role as mrole
-#from pyrbac.resource import Resource
-#from pyrbac.permission import define_permissions, Permission, PermissionError
-#from pyrbac.control import ensure
 
 
 #
@@ -136,3 +130,29 @@ class Test2(unittest.TestCase):
         with self.assertRaises(PermissionError):
             ensure(user1, Permission(TestResource, Create))
 
+    def testAssignment1(self):
+        '''
+        A Director attempts to assign a role of 'Manager'
+        '''
+        
+        user1 = UserRBAC([Director])
+        
+        self.assertTrue( can_assign(user1, Manager) )
+
+    def testAssignment2(self):
+        '''
+        A Manager attempts to assign a role of 'Director'
+        '''
+        
+        user1 = UserRBAC([Manager])
+        
+        self.assertFalse( can_assign(user1, Director) )
+
+    def testAssignment3(self):
+        '''
+        A Manager attempts to assign a role of 'Manager'
+        '''
+        
+        user1 = UserRBAC([Manager])
+        
+        self.assertFalse( can_assign(user1, Manager) )

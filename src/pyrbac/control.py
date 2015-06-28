@@ -51,3 +51,32 @@ def has_permission(role, permission):
             return True
 
     return False
+
+def can_assign(user_source, target_role):
+    '''
+    Can the 'user_source' assign 'target_role' to another user ?
+    
+    For 'user_source' to be able to assign 'target_role' to another user,
+     'user_source' must have all the permissions assigned to 'target_role' *and* more.
+    
+    @return True | False
+    '''
+    
+    target_permission_set = set(target_role.permissions)
+    
+    src_permissions_set = set()
+    
+    for role in user_source.roles:
+        
+        ##
+        ## It only takes 1 admin (or equivalent) role
+        ##
+        if role.has_all_permissions:
+            return True
+        
+        src_permissions_set.update(role.permissions)
+
+    ##
+    ## Must be a strict subset (i.e. not equal)
+    ##        
+    return target_permission_set < src_permissions_set

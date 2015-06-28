@@ -32,6 +32,11 @@ class Permission(object):
     def __eq__(self, other):
         return self.for_resource == other.for_resource and self.for_action == other.for_action
 
+    def __hash__(self):
+        '''
+        Useful in set() operations
+        '''
+        return hash(self.__repr__())
 
     
 def define_permissions(tuples_resource_action):

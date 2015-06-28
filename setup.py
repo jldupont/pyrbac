@@ -6,7 +6,7 @@
     @author: jldupont
 """
 __author__  ="Jean-Lou Dupont"
-__version__ ="0.2"
+__version__ ="0.3"
 
 DESC="""
 RBAC (Role Based Access Control) library loosely based on NIST model (see http://csrc.nist.gov/groups/SNS/rbac/ ).
