@@ -61,3 +61,8 @@ can_assign(user2, Manager) == True
 #  But a Manager can't even assign a role of Manager
 can_assign(user1, Manager) == False
 ```
+
+Client Side
+===========
+
+The following javascript client side library can be useful: https://github.com/jldupont/jsrbac
