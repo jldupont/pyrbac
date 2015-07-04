@@ -55,3 +55,5 @@ class UserRBAC(object):
             role_class = get_role_from_name(role_name)
             self.roles.append(role_class)
     
+    def __repr__(self):
+        return "User Roles: %s" % repr(self.roles)

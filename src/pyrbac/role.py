@@ -117,6 +117,7 @@ class Role(object):
         '''
         for permission in cls.permissions:
             assert isinstance(permission, Permission), "got: %s" % repr(permission)
+            
 #
 # ========================================================================= The basic roles
 #
